@@ -18,7 +18,7 @@ const createWindow = () => {
   mainWindow.loadFile('index.html')
 
   // 打开开发工具
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 }
 
 // 这段程序将会在 Electron 结束初始化
@@ -39,6 +39,12 @@ app.whenReady().then(() => {
   // explicitly with Cmd + Q.
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
+  })
+
+  app.on('activate', () => {
+    if(BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
   })
   
   // In this file you can include the rest of your app's specific main process
